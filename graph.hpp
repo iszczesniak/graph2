@@ -88,28 +88,30 @@ struct edge
 };
 
 // *******************************************************************
-// The units traits
+// The graph functions.
 
-template <typename>
-struct units_traits;
-
-template <>
-struct units_traits<edge>
+template <typename Vertex>
+auto
+num_vertexes(const graph<Vertex> &g)
 {
-  using type = edge::units_type;
-};
-
-template <typename T>
-using Units = typename units_traits<T>::type;
+  g.m_vertexes.size();
+}
 
 // *******************************************************************
-// The functions.
+// The vertex functions.
+
+template <typename Edge>
+const auto &
+get_name(const vertex<Edge> &v)
+{
+  return v.m_name;
+}
 
 template <typename Edge>
 auto &
-get_name(vertex<Edge> &v)
+get_edges(vertex<Edge> &)
 {
-  return v.m_name;
+  return v.m_edges;
 }
 
 template <typename Edge>
@@ -119,8 +121,8 @@ get_edges(const vertex<Edge> &)
   return v.m_edges;
 }
 
-graph::size_type
-num_vertexes(const graph &);
+// *******************************************************************
+// The edge functions.
 
 template <typename Weight>
 const vertex &
