@@ -125,23 +125,42 @@ get_edges(const vertex<Edge> &)
 // The edge functions.
 
 template <typename Weight>
-const vertex &
-get_source(const edge<Weight> &e)
+auto &
+get_source(edge<Weight> &e)
 {
-  return 
+  return e.m_source;
 }
 
-const vertex &
-get_target(const edge &);
+template <typename Weight>
+const auto &
+get_source(const edge<Weight> &e)
+{
+  return e.m_source;
+}
 
-const edge::cost_type &
-get_cost(const edge &);
+template <typename Weight>
+auto &
+get_target(edge<Weight> &e)
+{
+  return e.m_target;
+}
 
-const edge::units_type &
-get_units(const edge &);
+template <typename Weight>
+const auto &
+get_target(const edge<Weight> &e)
+{
+  return e.m_target;
+}
 
-const vertex::units_type &
-get_units(const vertex &);
+template <typename Weight>
+const auto &
+get_cost(const edge<Weight> &e)
+{
+  return e.m_weight;
+}
+
+// *******************************************************************
+// The edge functions.
 
 vertex &
 add_vertex(graph &g, const std::string name,
