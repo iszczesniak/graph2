@@ -154,24 +154,48 @@ get_target(const edge<Weight> &e)
 
 template <typename Weight>
 const auto &
-get_cost(const edge<Weight> &e)
+get_weight(const edge<Weight> &e)
 {
   return e.m_weight;
 }
 
+template <typename Weight>
+auto &
+get_units(edge<Weight> &e)
+{
+  return e.m_units;
+}
+
+template <typename Weight>
+const auto &
+get_units(const edge<Weight> &e)
+{
+  return e.m_units;
+}
+
 // *******************************************************************
-// The edge functions.
+// The helper functions.
 
-vertex &
-add_vertex(graph &g, const std::string name,
-           vertex::units_type units = {});
+template <typename Vertex>
+auto &
+add_vertex(graph<Vertex> &g, const std::string name)
+{
+  assert(g.m_vertexes.size() < g.m_vertexes.capacity());
+  g.m_vertexes.emplace_back(name);
+}
 
+template <typename Edge>
 void
-add_edge(graph &g, vertex &, const vertex &, edge::cost_type,
-         edge::units_type = {});
+add_edge(vertex<Edge> &s, const vertex<Edge> &t,
+         Edge::weight_type, Edge::units_type = {})
+{
+}
 
+template <typename Edge>
 void
-add_edge_pair(graph &g, vertex &, vertex &,
-              edge::cost_type, edge::units_type = {});
+add_edge_pair(vertex<Edge> &v1, vertex<Edge> &v2,
+              Edge::weight_type, Edge::units_type = {})
+{
+}
 
 #endif // GRAPH_HPP
