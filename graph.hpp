@@ -1,6 +1,8 @@
 #ifndef GRAPH_HPP
 #define GRAPH_HPP
 
+#include "units.hpp"
+
 #include <set>
 #include <string>
 #include <vector>
@@ -66,8 +68,8 @@ template <typename Weight>
 struct edge
 {
   using weight_type = Weight;
-  // The available units.
-  using units_type = std::set<unsigned>;
+  // The type of available units.
+  using units_type = SU;
 
   // The source node of the edge.
   const vertex &m_source;
@@ -182,6 +184,7 @@ add_vertex(graph<Vertex> &g, const std::string name)
 {
   assert(g.m_vertexes.size() < g.m_vertexes.capacity());
   g.m_vertexes.emplace_back(name);
+  return g.m_vertexes.back();
 }
 
 template <typename Edge>
