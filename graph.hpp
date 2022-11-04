@@ -187,15 +187,18 @@ add_vertex(graph<Vertex> &g, const std::string name)
 template <typename Edge>
 void
 add_edge(vertex<Edge> &s, const vertex<Edge> &t,
-         Edge::weight_type, Edge::units_type = {})
+         Edge::weight_type w, Edge::units_type u = {})
 {
+  s.m_edges.emplace(w, u);
 }
 
 template <typename Edge>
 void
 add_edge_pair(vertex<Edge> &v1, vertex<Edge> &v2,
-              Edge::weight_type, Edge::units_type = {})
+              Edge::weight_type w, Edge::units_type u = {})
 {
+  add_edge(v1, v2, w, u);
+  add_edge(v2, v1, w, u);
 }
 
 #endif // GRAPH_HPP
