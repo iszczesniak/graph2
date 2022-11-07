@@ -2,6 +2,7 @@
 #define GRAPH_HPP
 
 #include "graph_interface.hpp"
+#include "units.hpp"
 
 #include <set>
 #include <string>
@@ -68,13 +69,13 @@ template <typename Weight>
 struct edge
 {
   using weight_type = Weight;
-  // The available units.
-  using units_type = std::set<unsigned>;
+  // The type of available units.
+  using units_type = SU;
 
   // The source node of the edge.
-  const vertex &m_source;
+  const vertex<edge> &m_source;
   // The target node of the edge.
-  const vertex &m_target;
+  const vertex<edge> &m_target;
 
   // The weight.
   weight_type m_weight;
@@ -82,9 +83,9 @@ struct edge
   // The avilable units.
   units_type m_units;
 
-  edge(const vertex &source, const vertex &target, cost_type cost,
-       units_type units = {}):
-    m_source(source), m_target(target), m_cost(cost), m_units(units)
+  edge(const vertex<edge> &source, const vertex<edge> &target,
+       weight_type weight, units_type units = {}):
+    m_source(source), m_target(target), m_weight(weight), m_units(units)
   {
   }
 };
@@ -99,6 +100,20 @@ num_vertexes(const graph<Vertex> &g)
   g.m_vertexes.size();
 }
 
+template <typename Vertex>
+auto &
+get_vertexes(graph<Vertex> &g)
+{
+  return g.m_vertexes;
+}
+
+template <typename Vertex>
+const auto &
+get_vertexes(const graph<Vertex> &g)
+{
+  return g.m_vertexes;
+}
+
 // *******************************************************************
 // The vertex functions.
 
@@ -111,14 +126,14 @@ get_name(const vertex<Edge> &v)
 
 template <typename Edge>
 auto &
-get_edges(vertex<Edge> &)
+get_edges(vertex<Edge> &v)
 {
   return v.m_edges;
 }
 
 template <typename Edge>
 const auto &
-get_edges(const vertex<Edge> &)
+get_edges(const vertex<Edge> &v)
 {
   return v.m_edges;
 }
@@ -184,20 +199,26 @@ add_vertex(graph<Vertex> &g, const std::string name)
 {
   assert(g.m_vertexes.size() < g.m_vertexes.capacity());
   g.m_vertexes.emplace_back(name);
+  return g.m_vertexes.back();
 }
 
 template <typename Edge>
 void
 add_edge(vertex<Edge> &s, const vertex<Edge> &t,
-         Edge::weight_type, Edge::units_type = {})
+         typename Edge::weight_type w,
+         typename Edge::units_type u = {})
 {
+  s.m_edges.emplace_back(s, t, w, u);
 }
 
 template <typename Edge>
 void
 add_edge_pair(vertex<Edge> &v1, vertex<Edge> &v2,
-              Edge::weight_type, Edge::units_type = {})
+              typename Edge::weight_type w,
+              typename Edge::units_type u = {})
 {
+  add_edge(v1, v2, w, u);
+  add_edge(v2, v1, w, u);
 }
 
 // *******************************************************************
