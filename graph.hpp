@@ -223,10 +223,10 @@ add_edge_pair(vertex<Edge> &v1, vertex<Edge> &v2,
 
 // *******************************************************************
 // The trait specializations.
-template <typename Vertex>
-struct edge_traits<graph<Vertex>>
+template <typename Edge>
+struct edge_traits<graph<vertex<Edge>>>
 {
-  using type = edge;
+  using type = Edge;
 };
 
 #endif // GRAPH_HPP
