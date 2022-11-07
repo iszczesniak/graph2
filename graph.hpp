@@ -1,6 +1,8 @@
 #ifndef GRAPH_HPP
 #define GRAPH_HPP
 
+#include "graph_interface.hpp"
+
 #include <set>
 #include <string>
 #include <vector>
@@ -197,5 +199,13 @@ add_edge_pair(vertex<Edge> &v1, vertex<Edge> &v2,
               Edge::weight_type, Edge::units_type = {})
 {
 }
+
+// *******************************************************************
+// The trait specializations.
+template <typename Vertex>
+struct edge_traits<graph<Vertex>>
+{
+  using type = edge;
+};
 
 #endif // GRAPH_HPP
