@@ -63,6 +63,13 @@ struct vertex
   // reallocated.  However, we don't mind that, because we don't store
   // references to edges anywhere.
   edges_type m_edges;
+
+  // Vertex objects are the same only when it's the same object.
+  bool
+  operator == (const vertex &a)
+  {
+    return this == &a;
+  }
 };
 
 template <typename Weight, typename Resources>
