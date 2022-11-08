@@ -2,15 +2,15 @@
 #define GRAPH_HPP
 
 #include "graph_interface.hpp"
-#include "units.hpp"
 
+#include <cassert>
 #include <set>
 #include <string>
 #include <vector>
 
 // *******************************************************************
 // A directed graph of the number of vertex given in advance.
-// An edge has a weight and a set of units.
+// An edge has a weight and resources.
 // *******************************************************************
 
 // The graph.
@@ -65,12 +65,12 @@ struct vertex
   edges_type m_edges;
 };
 
-template <typename Weight>
+template <typename Weight, typename Resources>
 struct edge
 {
   using weight_type = Weight;
-  // The type of available units.
-  using units_type = SU;
+  // The type of available resources.
+  using resources_type = Resources;
 
   // The source node of the edge.
   const vertex<edge> &m_source;
@@ -80,12 +80,12 @@ struct edge
   // The weight.
   weight_type m_weight;
 
-  // The avilable units.
-  units_type m_units;
+  // The avilable resources.
+  resources_type m_resources;
 
   edge(const vertex<edge> &source, const vertex<edge> &target,
-       weight_type weight, units_type units = {}):
-    m_source(source), m_target(target), m_weight(weight), m_units(units)
+       weight_type weight, resources_type resources = {}):
+    m_source(source), m_target(target), m_weight(weight), m_resources(resources)
   {
   }
 };
@@ -141,53 +141,53 @@ get_edges(const vertex<Edge> &v)
 // *******************************************************************
 // The edge functions.
 
-template <typename Weight>
+template <typename Weight, typename Resources>
 auto &
-get_source(edge<Weight> &e)
+get_source(edge<Weight, Resources> &e)
 {
   return e.m_source;
 }
 
-template <typename Weight>
+template <typename Weight, typename Resources>
 const auto &
-get_source(const edge<Weight> &e)
+get_source(const edge<Weight, Resources> &e)
 {
   return e.m_source;
 }
 
-template <typename Weight>
+template <typename Weight, typename Resources>
 auto &
-get_target(edge<Weight> &e)
+get_target(edge<Weight, Resources> &e)
 {
   return e.m_target;
 }
 
-template <typename Weight>
+template <typename Weight, typename Resources>
 const auto &
-get_target(const edge<Weight> &e)
+get_target(const edge<Weight, Resources> &e)
 {
   return e.m_target;
 }
 
-template <typename Weight>
+template <typename Weight, typename Resources>
 const auto &
-get_weight(const edge<Weight> &e)
+get_weight(const edge<Weight, Resources> &e)
 {
   return e.m_weight;
 }
 
-template <typename Weight>
+template <typename Weight, typename Resources>
 auto &
-get_units(edge<Weight> &e)
+get_resources(edge<Weight, Resources> &e)
 {
-  return e.m_units;
+  return e.m_resources;
 }
 
-template <typename Weight>
+template <typename Weight, typename Resources>
 const auto &
-get_units(const edge<Weight> &e)
+get_resources(const edge<Weight, Resources> &e)
 {
-  return e.m_units;
+  return e.m_resources;
 }
 
 // *******************************************************************
@@ -206,7 +206,7 @@ template <typename Edge>
 void
 add_edge(vertex<Edge> &s, const vertex<Edge> &t,
          typename Edge::weight_type w,
-         typename Edge::units_type u = {})
+         typename Edge::resources_type u = {})
 {
   s.m_edges.emplace_back(s, t, w, u);
 }
@@ -215,7 +215,7 @@ template <typename Edge>
 void
 add_edge_pair(vertex<Edge> &v1, vertex<Edge> &v2,
               typename Edge::weight_type w,
-              typename Edge::units_type u = {})
+              typename Edge::resources_type u = {})
 {
   add_edge(v1, v2, w, u);
   add_edge(v2, v1, w, u);

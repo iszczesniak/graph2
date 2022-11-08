@@ -1,4 +1,5 @@
 #include "graph.hpp"
+#include "units.hpp"
 
 #include <cassert>
 #include <iostream>
@@ -12,7 +13,7 @@ main()
   //  \                                       /
   //   \---[2, (1, 5)]---(1)---[2, (1, 5)]---/
 
-  graph<vertex<edge<int>>> g(4);
+  graph<vertex<edge<int, SU>>> g(4);
   auto &v0 = add_vertex(g, "v0");
   auto &v1 = add_vertex(g, "v1");
   auto &v2 = add_vertex(g, "v2");
@@ -28,6 +29,6 @@ main()
       cout << get_name(v) << ":\n";
       for(const auto &e: get_edges(v))
         cout << "\t" << get_name(get_target(e)) << ", "
-             << get_weight(e) << ", " << get_units(e) << '\n';
+             << get_weight(e) << ", " << get_resources(e) << '\n';
     }
 }
