@@ -96,7 +96,7 @@ template <typename Vertex>
 auto
 num_vertexes(const graph<Vertex> &g)
 {
-  g.m_vertexes.size();
+  return g.m_vertexes.size();
 }
 
 template <typename Vertex>
