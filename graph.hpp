@@ -49,11 +49,16 @@ struct vertex
 {
   // The data structure for storing edges.
   using edges_type = std::vector<Edge>;
+  // The type of the index.
+  using index_type = typename graph<vertex>::size_type;
 
+  // The index of the vertex.
+  index_type m_index;
   // The name of the vertex.
   std::string m_name;
 
-  vertex(std::string name = {}): m_name(name)
+  vertex(index_type index, std::string name = {}):
+    m_index(index), m_name(name)
   {
   }
 
@@ -123,6 +128,13 @@ get_vertexes(const graph<Vertex> &g)
 
 // *******************************************************************
 // The vertex functions.
+
+template <typename Edge>
+const auto &
+get_index(const vertex<Edge> &v)
+{
+  return v.m_index;
+}
 
 template <typename Edge>
 const auto &
@@ -205,7 +217,8 @@ auto &
 add_vertex(graph<Vertex> &g, const std::string name)
 {
   assert(g.m_vertexes.size() < g.m_vertexes.capacity());
-  g.m_vertexes.emplace_back(name);
+  auto index = g.m_vertexes.size();
+  g.m_vertexes.emplace_back(index, name);
   return g.m_vertexes.back();
 }
 

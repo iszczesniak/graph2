@@ -19,6 +19,11 @@ main()
   auto &v2 = add_vertex(g, "v2");
   auto &v3 = add_vertex(g, "v3");
 
+  assert(get_index(v0) == 0);
+  assert(get_index(v1) == 1);
+  assert(get_index(v2) == 2);
+  assert(get_index(v3) == 3);
+  
   add_edge(v0, v1, 2, {CU(1, 5)});
   add_edge(v0, v2, 2, {CU(0, 3)});
   add_edge(v1, v2, 2, {CU(1, 5)});
