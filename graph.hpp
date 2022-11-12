@@ -242,7 +242,15 @@ add_edge_pair(vertex<Edge> &v1, vertex<Edge> &v2,
 }
 
 // *******************************************************************
-// The trait specializations.
+// The vertex trait specializations.
+template <typename Weight, typename Resources>
+struct vertex_traits<edge<Weight, Resources>>
+{
+  using type = Edge;
+};
+
+// *******************************************************************
+// The edge trait specializations.
 template <typename Edge>
 struct edge_traits<graph<vertex<Edge>>>
 {
