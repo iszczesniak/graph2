@@ -62,6 +62,8 @@ struct vertex
   {
   }
 
+  vertex(const vertex &) = delete;
+  
   // We're using a vector, because we're frequently iterating over the
   // edges of a vertex.  When using a vector, references to edges can
   // invalidate when we add a new vertex, because the vector can be

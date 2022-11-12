@@ -36,8 +36,8 @@ main()
   cout << "&get_source(e0) = " << &get_source(e0) << endl;
 
   // Make sure we are using the same vertex objects.
-  assert(&get_source(e0) == &v0);
-  assert(&get_target(e1) == &v1);
+  assert(get_source(e0) == v0);
+  assert(get_target(e1) == v1);
   
   for(const auto &v: get_vertexes(g))
     {
