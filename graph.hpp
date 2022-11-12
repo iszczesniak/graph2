@@ -223,12 +223,13 @@ add_vertex(graph<Vertex> &g, const std::string name)
 }
 
 template <typename Edge>
-void
+auto &
 add_edge(vertex<Edge> &s, const vertex<Edge> &t,
          typename Edge::weight_type w,
          typename Edge::resources_type u = {})
 {
   s.m_edges.emplace_back(s, t, w, u);
+  return s.m_edges.back();
 }
 
 template <typename Edge>
@@ -247,6 +248,14 @@ template <typename Weight, typename Resources>
 struct vertex_traits<edge<Weight, Resources>>
 {
   using type = vertex<edge<Weight, Resources>>;
+};
+
+// *******************************************************************
+// The index trait specializations.
+template <typename Edge>
+struct index_traits<vertex<Edge>>
+{
+  using type = vertex<Edge>::index_type;
 };
 
 // *******************************************************************

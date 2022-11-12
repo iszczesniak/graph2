@@ -23,12 +23,22 @@ main()
   assert(get_index(v1) == 1);
   assert(get_index(v2) == 2);
   assert(get_index(v3) == 3);
-  
-  add_edge(v0, v1, 2, {CU(1, 5)});
-  add_edge(v0, v2, 2, {CU(0, 3)});
-  add_edge(v1, v2, 2, {CU(1, 5)});
-  add_edge(v2, v3, 2, {CU(1, 5)});
 
+  // Test the index traits.
+  Index<vertex<edge<int, SU>>> i0 = get_index(v0);
+
+  auto &e0 = add_edge(v0, v1, 2, {CU(1, 5)});
+  auto &e1 = add_edge(v0, v2, 2, {CU(0, 3)});
+  auto &e2 = add_edge(v1, v2, 2, {CU(1, 5)});
+  auto &e3 = add_edge(v2, v3, 2, {CU(1, 5)});
+
+  cout << "&v0 = " << &v0 << endl;
+  cout << "&get_source(e0) = " << &get_source(e0) << endl;
+
+  // Make sure we are using the same vertex objects.
+  assert(&get_source(e0) == &v0);
+  assert(&get_target(e1) == &v1);
+  
   for(const auto &v: get_vertexes(g))
     {
       cout << get_name(v) << ":\n";
