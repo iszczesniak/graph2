@@ -246,7 +246,7 @@ add_edge_pair(vertex<Edge> &v1, vertex<Edge> &v2,
 template <typename Weight, typename Resources>
 struct vertex_traits<edge<Weight, Resources>>
 {
-  using type = Edge;
+  using type = vertex<edge<Weight, Resources>>;
 };
 
 // *******************************************************************
