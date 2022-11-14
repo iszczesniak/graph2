@@ -61,9 +61,7 @@ struct vertex
     m_index(index), m_name(name)
   {
   }
-
-  vertex(const vertex &) = delete;
-  
+ 
   // We're using a vector, because we're frequently iterating over the
   // edges of a vertex.  When using a vector, references to edges can
   // invalidate when we add a new vertex, because the vector can be
@@ -225,13 +223,12 @@ add_vertex(graph<Vertex> &g, const std::string name)
 }
 
 template <typename Edge>
-auto &
+void
 add_edge(vertex<Edge> &s, const vertex<Edge> &t,
          typename Edge::weight_type w,
          typename Edge::resources_type u = {})
 {
   s.m_edges.emplace_back(s, t, w, u);
-  return s.m_edges.back();
 }
 
 template <typename Edge>
