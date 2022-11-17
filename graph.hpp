@@ -209,6 +209,18 @@ get_resources(const edge<Weight, Resources> &e)
   return e.m_resources;
 }
 
+template <typename Weight, typename Resources>
+std::ostream &
+operator << (std::ostream &os, const edge<Weight, Resources> &l)
+{
+  os << "edge("
+     << "weight = " << get_weight(l) << ", "
+     << "resources = " << get_resources(l)
+     << ")";
+
+  return os;
+}
+
 // *******************************************************************
 // The helper functions.
 
