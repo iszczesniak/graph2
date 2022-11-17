@@ -4,6 +4,7 @@
 #include "graph_interface.hpp"
 
 #include <cassert>
+#include <iostream>
 #include <set>
 #include <string>
 #include <vector>
