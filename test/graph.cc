@@ -52,9 +52,8 @@ main()
   
   for(const auto &v: get_vertexes(g))
     {
-      cout << get_name(v) << ":\n";
+      cout << v << ":\n";
       for(const auto &e: get_edges(v))
-        cout << "\t" << get_name(get_target(e)) << ", "
-             << get_weight(e) << ", " << get_resources(e) << '\n';
+        cout << "\t" << e << '\n';
     }
 }

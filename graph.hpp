@@ -158,6 +158,15 @@ get_edges(const vertex<Edge> &v)
   return v.m_edges;
 }
 
+template <typename Edge>
+std::ostream &
+operator << (std::ostream &os, const vertex<Edge> &v)
+{
+  os << "vertex(" << "name = " << get_name(v) << ")";
+
+  return os;
+}
+
 // *******************************************************************
 // The edge functions.
 
@@ -215,6 +224,8 @@ std::ostream &
 operator << (std::ostream &os, const edge<Weight, Resources> &l)
 {
   os << "edge("
+     << "source = " << get_source(l) << ", "
+     << "target = " << get_target(l) << ", "
      << "weight = " << get_weight(l) << ", "
      << "resources = " << get_resources(l)
      << ")";
