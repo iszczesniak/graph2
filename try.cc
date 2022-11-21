@@ -1,3 +1,4 @@
+#include <set>
 #include <type_traits>
 
 template <typename>
@@ -18,6 +19,12 @@ struct weight_traits<A<Weight>>
   using type = Weight;
 };
 
+template <typename Weight>
+auto get_weight(const A<Weight> &a)
+{
+  return a.m_weight;
+}
+
 template <typename>
 struct resource_traits;
 
@@ -36,6 +43,11 @@ struct resource_traits<B<Resource, Weight>>
 int
 main()
 {
+  // The traits doesn't work for the base class.
   static_assert(std::is_same_v<int, Weight<A<int>>>);
-  static_assert(std::is_same_v<int, Weight<B<int, int>>>);
+  // static_assert(std::is_same_v<int, Weight<B<int, int>>>);
+
+  // The getter works for the base object.
+  B<int, std::set<int>> b;
+  get_weight(b);
 }
