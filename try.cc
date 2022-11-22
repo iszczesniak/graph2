@@ -1,53 +1,72 @@
+#include <iostream>
 #include <set>
-#include <type_traits>
 
-template <typename>
-struct weight_traits;
-
-template <typename T>
-using Weight = typename weight_traits<T>::type;
+using namespace std;
 
 template <typename Weight>
-struct A
+struct weight
 {
   Weight m_weight;
+
+  weight(const Weight &weight): m_weight(weight)
+  {
+  }
 };
 
 template <typename Weight>
-struct weight_traits<A<Weight>>
-{
-  using type = Weight;
-};
-
-template <typename Weight>
-auto get_weight(const A<Weight> &a)
+auto &
+get_weight(weight<Weight> &a)
 {
   return a.m_weight;
 }
 
-template <typename>
-struct resource_traits;
-
-template <typename Resource, typename Weight>
-struct B: A<Weight>
+template <typename Weight>
+const auto &
+get_weight(const weight<Weight> &a)
 {
-  Resource m_resource;
+  return a.m_weight;
+}
+
+template <typename Resources>
+struct resources
+{
+  Resources m_resources;
+
+  resources(const Resources &resources): m_resources(resources)
+  {
+  }
 };
 
-template <typename Resource, typename Weight>
-struct resource_traits<B<Resource, Weight>>
+// The non-const getter.
+template <typename Resources>
+auto &
+get_resources(resources<Resources> &a)
 {
-  using type = Resource;
+  return a.m_resources;
+}
+
+// The const getter.
+template <typename Resources>
+const auto &
+get_resources(const resources<Resources> &a)
+{
+  return a.m_resources;
+}
+
+template <typename... Props>
+struct edge: Props...
+{
+  edge(const Props &... props): Props(props)...
+  {
+  }
 };
 
 int
 main()
 {
-  // The traits doesn't work for the base class.
-  static_assert(std::is_same_v<int, Weight<A<int>>>);
-  // static_assert(std::is_same_v<int, Weight<B<int, int>>>);
-
   // The getter works for the base object.
-  B<int, std::set<int>> b;
-  get_weight(b);
+  edge<weight<const int>, resources<std::set<int>>> e(1, std::set{10});
+
+  cout << get_weight(e) << endl;
+  //  get_resources(e).insert(1);
 }
