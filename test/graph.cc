@@ -13,7 +13,7 @@ main()
   //  \                                       /
   //   \---[2, (1, 5)]---(1)---[2, (1, 5)]---/
 
-  graph<vertex<edge<int, SU>>> g(4);
+  graph<vertex<edge<weight<int>, resources<SU>>>> g(4);
   auto &v0 = add_vertex(g, "v0");
   auto &v1 = add_vertex(g, "v1");
   auto &v2 = add_vertex(g, "v2");
@@ -27,10 +27,10 @@ main()
   // Test the index traits.
   Index<vertex<edge<int, SU>>> i0 = get_index(v0);
 
-  add_edge(v0, v1, 1, {CU(1, 5)}); // e0
-  add_edge(v0, v2, 2, {CU(0, 3)}); // e1
-  add_edge(v1, v2, 3, {CU(1, 5)}); // e2
-  add_edge(v2, v3, 4, {CU(1, 5)}); // e3
+  add_edge(v0, v1, 1, SU{CU(1, 5)}); // e0
+  add_edge(v0, v2, 2, SU{CU(0, 3)}); // e1
+  add_edge(v1, v2, 3, SU{CU(1, 5)}); // e2
+  add_edge(v2, v3, 4, SU{CU(1, 5)}); // e3
 
   // Make sure we are using the same vertex objects.
   auto v0i = get_edges(v0).begin();
@@ -50,10 +50,10 @@ main()
   assert(get_weight(e1) == 2);
   assert(get_resources(e1) == SU{CU(0, 3)});
   
-  for(const auto &v: get_vertexes(g))
-    {
-      cout << v << ":\n";
-      for(const auto &e: get_edges(v))
-        cout << "\t" << e << '\n';
-    }
+  // for(const auto &v: get_vertexes(g))
+  //   {
+  //     cout << v << ":\n";
+  //     for(const auto &e: get_edges(v))
+  //       cout << "\t" << e << '\n';
+  //   }
 }

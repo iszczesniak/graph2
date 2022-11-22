@@ -1,7 +1,5 @@
-#include <iostream>
-#include <set>
-
-using namespace std;
+#ifndef PROPS_HPP
+#define PROPS_HPP
 
 template <typename Weight>
 struct weight
@@ -13,6 +11,7 @@ struct weight
   }
 };
 
+// The non-const getter.
 template <typename Weight>
 auto &
 get_weight(weight<Weight> &a)
@@ -20,6 +19,7 @@ get_weight(weight<Weight> &a)
   return a.m_weight;
 }
 
+// The const getter.
 template <typename Weight>
 const auto &
 get_weight(const weight<Weight> &a)
@@ -53,20 +53,4 @@ get_resources(const resources<Resources> &a)
   return a.m_resources;
 }
 
-template <typename... Props>
-struct edge: Props...
-{
-  edge(const Props &... props): Props(props)...
-  {
-  }
-};
-
-int
-main()
-{
-  // The getter works for the base object.
-  edge<weight<const int>, resources<std::set<int>>> e(1, std::set{10});
-
-  cout << get_weight(e) << endl;
-  //  get_resources(e).insert(1);
-}
+#endif // PROPS_HPP

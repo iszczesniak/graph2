@@ -2,16 +2,17 @@
 #define GRAPH_HPP
 
 #include "graph_interface.hpp"
+#include "props.hpp"
 
 #include <cassert>
 #include <iostream>
 #include <set>
 #include <string>
+#include <utility>
 #include <vector>
 
 // *******************************************************************
 // A directed graph of the number of vertex given in advance.
-// An edge has a weight and resources.
 // *******************************************************************
 
 // The graph.
@@ -78,27 +79,17 @@ struct vertex
   }
 };
 
-template <typename Weight, typename Resources>
-struct edge
+template <typename Vertex, typename... Props>
+struct edge: Props...
 {
-  using weight_type = Weight;
-  // The type of available resources.
-  using resources_type = Resources;
-
   // The source node of the edge.
-  const vertex<edge> &m_source;
+  const Vertex &m_source;
   // The target node of the edge.
-  const vertex<edge> &m_target;
+  const Vertex &m_target;
 
-  // The weight.
-  weight_type m_weight;
-
-  // The avilable resources.
-  resources_type m_resources;
-
-  edge(const vertex<edge> &source, const vertex<edge> &target,
-       weight_type weight, resources_type resources = {}):
-    m_source(source), m_target(target), m_weight(weight), m_resources(resources)
+  edge(const Vertex &source, const Vertex &target,
+       Props &&... props):
+    m_source(source), m_target(target), Props(props)...
   {
   }
 };
@@ -170,67 +161,32 @@ operator << (std::ostream &os, const vertex<Edge> &v)
 // *******************************************************************
 // The edge functions.
 
-template <typename Weight, typename Resources>
+template <typename Vertex, typename... Props>
 auto &
-get_source(edge<Weight, Resources> &e)
+get_source(edge<Vertex, Props...> &e)
 {
   return e.m_source;
 }
 
-template <typename Weight, typename Resources>
+template <typename Vertex, typename... Props>
 const auto &
-get_source(const edge<Weight, Resources> &e)
+get_source(const edge<Vertex, Props...> &e)
 {
   return e.m_source;
 }
 
-template <typename Weight, typename Resources>
+template <typename Vertex, typename... Props>
 auto &
-get_target(edge<Weight, Resources> &e)
+get_target(edge<Vertex, Props...> &e)
 {
   return e.m_target;
 }
 
-template <typename Weight, typename Resources>
+template <typename Vertex, typename... Props>
 const auto &
-get_target(const edge<Weight, Resources> &e)
+get_target(const edge<Vertex, Props...> &e)
 {
   return e.m_target;
-}
-
-template <typename Weight, typename Resources>
-const auto &
-get_weight(const edge<Weight, Resources> &e)
-{
-  return e.m_weight;
-}
-
-template <typename Weight, typename Resources>
-auto &
-get_resources(edge<Weight, Resources> &e)
-{
-  return e.m_resources;
-}
-
-template <typename Weight, typename Resources>
-const auto &
-get_resources(const edge<Weight, Resources> &e)
-{
-  return e.m_resources;
-}
-
-template <typename Weight, typename Resources>
-std::ostream &
-operator << (std::ostream &os, const edge<Weight, Resources> &l)
-{
-  os << "edge("
-     << "source = " << get_source(l) << ", "
-     << "target = " << get_target(l) << ", "
-     << "weight = " << get_weight(l) << ", "
-     << "resources = " << get_resources(l)
-     << ")";
-
-  return os;
 }
 
 // *******************************************************************
@@ -246,23 +202,19 @@ add_vertex(graph<Vertex> &g, const std::string name)
   return g.m_vertexes.back();
 }
 
-template <typename Edge>
+template <typename Vertex, typename... Props>
 void
-add_edge(vertex<Edge> &s, const vertex<Edge> &t,
-         typename Edge::weight_type w,
-         typename Edge::resources_type u = {})
+add_edge(Vertex &s, const Vertex &t, Props &&... props)
 {
-  s.m_edges.emplace_back(s, t, w, u);
+  s.m_edges.emplace_back(s, t, std::forward<Props>(props)...);
 }
 
-template <typename Edge>
+template <typename Vertex, typename... Props>
 void
-add_edge_pair(vertex<Edge> &v1, vertex<Edge> &v2,
-              typename Edge::weight_type w,
-              typename Edge::resources_type u = {})
+add_edge_pair(Vertex &v1, const Vertex &v2, Props &&... props)
 {
-  add_edge(v1, v2, w, u);
-  add_edge(v2, v1, w, u);
+  add_edge(v1, v2, std::forward<Props>(props)...);
+  add_edge(v2, v1, std::forward<Props>(props)...);
 }
 
 // *******************************************************************
