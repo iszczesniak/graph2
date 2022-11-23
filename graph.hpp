@@ -12,7 +12,7 @@
 #include <vector>
 
 // *******************************************************************
-// A directed graph of the number of vertex given in advance.
+// A directed graph of the number of vertexes given in advance.
 // *******************************************************************
 
 // The graph.
