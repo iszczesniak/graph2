@@ -6,17 +6,16 @@ struct vertex
   std::vector<Edge> m_t;
 };
 
-template <typename Vertex, typename T>
+template <typename Vertex>
 struct edge
 {
-  Vertex &m_a;
-  T m_t;
+  const Vertex &m_a;
 };
 
 int
 main()
 {
-  using edge_type = edge<vertex, int>;
-  using vertex_type = vertex<edge<vertex, int>>;
+  using edge_type = edge<vertex>;
+  using vertex_type = vertex<edge<vertex>>;
   vertex_type v;
 }
