@@ -63,7 +63,7 @@ struct vertex
     m_index(index), m_name(name)
   {
   }
- 
+
   // We're using a vector, because we're frequently iterating over the
   // edges of a vertex.  When using a vector, references to edges can
   // invalidate when we add a new vertex, because the vector can be
@@ -73,7 +73,7 @@ struct vertex
 
   // Vertex objects are the same only when it's the same object.
   bool
-  operator == (const vertex &a)
+  operator == (const vertex &a) const
   {
     return this == &a;
   }
