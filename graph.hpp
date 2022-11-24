@@ -79,15 +79,17 @@ struct vertex
   }
 };
 
-template <typename Vertex, typename... Props>
+template <typename... Props>
 struct edge: Props...
 {
-  // The source node of the edge.
-  const Vertex &m_source;
-  // The target node of the edge.
-  const Vertex &m_target;
+  using vertex_type = vertex<edge>;
 
-  edge(const Vertex &source, const Vertex &target,
+  // The source node of the edge.
+  const vertex_type &m_source;
+  // The target node of the edge.
+  const vertex_type &m_target;
+
+  edge(const vertex_type &source, const vertex_type &target,
        Props &&... props):
     m_source(source), m_target(target), Props(props)...
   {
