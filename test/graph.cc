@@ -50,10 +50,10 @@ main()
   assert(get_weight(e1) == 2);
   assert(get_resources(e1) == SU{CU(0, 3)});
   
-  // for(const auto &v: get_vertexes(g))
-  //   {
-  //     cout << v << ":\n";
-  //     for(const auto &e: get_edges(v))
-  //       cout << "\t" << e << '\n';
-  //   }
+  for(const auto &v: get_vertexes(g))
+    {
+      cout << v << ":\n";
+      for(const auto &e: get_edges(v))
+        cout << "\t" << e << '\n';
+    }
 }

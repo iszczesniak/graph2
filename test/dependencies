@@ -1,2 +1,3 @@
-graph.o: graph.cc ../graph.hpp ../graph_interface.hpp units/units.hpp \
- units/cunits.hpp units/sunits.hpp
+graph.o: graph.cc ../graph.hpp ../graph_interface.hpp ../props.hpp \
+ units/units.hpp units/cunits.hpp units/sunits.hpp
+try.o: try.cc

@@ -96,6 +96,16 @@ struct edge: Props...
   }
 };
 
+template <typename... Props>
+std::ostream &
+operator << (std::ostream &os, const edge<Props...> &e)
+{
+  os << "edge("
+     << ")";
+
+  return os;
+}
+
 // *******************************************************************
 // The graph functions.
 

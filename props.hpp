@@ -1,6 +1,12 @@
 #ifndef PROPS_HPP
 #define PROPS_HPP
 
+#include <iostream>
+
+// -------------------------------------------------------------------
+// weight
+// -------------------------------------------------------------------
+
 template <typename Weight>
 struct weight
 {
@@ -27,6 +33,19 @@ get_weight(const weight<Weight> &a)
   return a.m_weight;
 }
 
+template <typename Weight>
+std::ostream &
+operator << (std::ostream &os, const weight<Weight> &w)
+{
+  os << "weight = " << w.m_weight;
+
+  return os;
+}
+
+// -------------------------------------------------------------------
+// resources
+// -------------------------------------------------------------------
+
 template <typename Resources>
 struct resources
 {
@@ -51,6 +70,15 @@ const auto &
 get_resources(const resources<Resources> &a)
 {
   return a.m_resources;
+}
+
+template <typename Resources>
+std::ostream &
+operator << (std::ostream &os, const resources<Resources> &w)
+{
+  os << "resources = " << w.m_resources;
+
+  return os;
 }
 
 #endif // PROPS_HPP
