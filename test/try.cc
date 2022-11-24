@@ -20,6 +20,17 @@ struct edge
   T m_t;
 };
 
+// I can resolve the conflict by specifically using the vertex<edge>
+// type, but this way I cannot use a different vertex type, it has to
+// be "vertex".
+
+template <typename T>
+struct edge
+{
+  vertex<edge> &m_a;
+  T m_t;
+};
+
 int
 main()
 {
