@@ -100,8 +100,9 @@ template <typename... Props>
 std::ostream &
 operator << (std::ostream &os, const edge<Props...> &e)
 {
-  os << "edge("
-     << ")";
+  os << "edge(";
+  (os << ... << static_cast<Props>(e));
+  os << ")";
 
   return os;
 }
