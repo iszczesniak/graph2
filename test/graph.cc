@@ -3,6 +3,7 @@
 
 #include <cassert>
 #include <iostream>
+#include <string>
 
 using namespace std;
 
@@ -13,7 +14,9 @@ main()
   //  \                                       /
   //   \---[2, (1, 5)]---(1)---[2, (1, 5)]---/
 
-  graph<vertex<edge<weight<int>, resources<SU>>>> g(4);
+  graph<vertex<edge<weight<int>, resources<SU>>,
+               index<unsigned>, name<std::string>>> g(4);
+
   auto &v0 = add_vertex(g, "v0");
   auto &v1 = add_vertex(g, "v1");
   auto &v2 = add_vertex(g, "v2");
@@ -25,7 +28,7 @@ main()
   assert(get_index(v3) == 3);
 
   // Test the index traits.
-  Index<vertex<edge<int, SU>>> i0 = get_index(v0);
+  auto i0 = get_index(v0);
 
   add_edge(v0, v1, 1, SU{CU(1, 5)}); // e0
   add_edge(v0, v2, 2, SU{CU(0, 3)}); // e1

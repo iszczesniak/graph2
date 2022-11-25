@@ -120,4 +120,43 @@ operator << (std::ostream &os, const index<Index> &w)
   return os;
 }
 
+// -------------------------------------------------------------------
+// name
+// -------------------------------------------------------------------
+
+template <typename Name>
+struct name
+{
+  Name m_name;
+
+  name(const Name &name): m_name(name)
+  {
+  }
+};
+
+// The non-const getter.
+template <typename Name>
+auto &
+get_name(name<Name> &a)
+{
+  return a.m_name;
+}
+
+// The const getter.
+template <typename Name>
+const auto &
+get_name(const name<Name> &a)
+{
+  return a.m_name;
+}
+
+template <typename Name>
+std::ostream &
+operator << (std::ostream &os, const name<Name> &w)
+{
+  os << "name = " << w.m_name;
+
+  return os;
+}
+
 #endif // PROPS_HPP

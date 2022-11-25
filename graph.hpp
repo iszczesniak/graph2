@@ -46,21 +46,14 @@ struct graph
   graph(graph &&) = default;
 };
 
-template <typename Edge>
-struct vertex
+template <typename Edge, typename... Props>
+struct vertex: Props...
 {
+  using edge_type = Edge;
   // The data structure for storing edges.
-  using edges_type = std::vector<Edge>;
-  // The type of the index.
-  using index_type = typename graph<vertex>::size_type;
+  using edges_type = std::vector<edge_type>;
 
-  // The index of the vertex.
-  index_type m_index;
-  // The name of the vertex.
-  std::string m_name;
-
-  vertex(index_type index, std::string name = {}):
-    m_index(index), m_name(name)
+  vertex(Props &&... props): Props(props)...
   {
   }
 
@@ -134,37 +127,23 @@ get_vertexes(const graph<Vertex> &g)
 // *******************************************************************
 // The vertex functions.
 
-template <typename Edge>
-const auto &
-get_index(const vertex<Edge> &v)
-{
-  return v.m_index;
-}
-
-template <typename Edge>
-const auto &
-get_name(const vertex<Edge> &v)
-{
-  return v.m_name;
-}
-
-template <typename Edge>
+template <typename Edge, typename... Props>
 auto &
-get_edges(vertex<Edge> &v)
+get_edges(vertex<Edge, Props...> &v)
 {
   return v.m_edges;
 }
 
-template <typename Edge>
+template <typename Edge, typename... Props>
 const auto &
-get_edges(const vertex<Edge> &v)
+get_edges(const vertex<Edge, Props...> &v)
 {
   return v.m_edges;
 }
 
-template <typename Edge>
+template <typename Edge, typename... Props>
 std::ostream &
-operator << (std::ostream &os, const vertex<Edge> &v)
+operator << (std::ostream &os, const vertex<Edge, Props...> &v)
 {
   os << "vertex(" << "name = " << get_name(v) << ")";
 
@@ -174,30 +153,30 @@ operator << (std::ostream &os, const vertex<Edge> &v)
 // *******************************************************************
 // The edge functions.
 
-template <typename Vertex, typename... Props>
+template <typename... Props>
 auto &
-get_source(edge<Vertex, Props...> &e)
+get_source(edge<Props...> &e)
 {
   return e.m_source;
 }
 
-template <typename Vertex, typename... Props>
+template <typename... Props>
 const auto &
-get_source(const edge<Vertex, Props...> &e)
+get_source(const edge<Props...> &e)
 {
   return e.m_source;
 }
 
-template <typename Vertex, typename... Props>
+template <typename... Props>
 auto &
-get_target(edge<Vertex, Props...> &e)
+get_target(edge<Props...> &e)
 {
   return e.m_target;
 }
 
-template <typename Vertex, typename... Props>
+template <typename... Props>
 const auto &
-get_target(const edge<Vertex, Props...> &e)
+get_target(const edge<Props...> &e)
 {
   return e.m_target;
 }
@@ -229,29 +208,5 @@ add_edge_pair(Vertex &v1, const Vertex &v2, Props &&... props)
   add_edge(v1, v2, std::forward<Props>(props)...);
   add_edge(v2, v1, std::forward<Props>(props)...);
 }
-
-// *******************************************************************
-// The vertex trait specializations.
-template <typename Weight, typename Resources>
-struct vertex_traits<edge<Weight, Resources>>
-{
-  using type = vertex<edge<Weight, Resources>>;
-};
-
-// *******************************************************************
-// The index trait specializations.
-template <typename Edge>
-struct index_traits<vertex<Edge>>
-{
-  using type = vertex<Edge>::index_type;
-};
-
-// *******************************************************************
-// The edge trait specializations.
-template <typename Edge>
-struct edge_traits<graph<vertex<Edge>>>
-{
-  using type = Edge;
-};
 
 #endif // GRAPH_HPP
