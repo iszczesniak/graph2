@@ -1,45 +1,27 @@
 #include <vector>
 
-// This is an example of the circular dependency between two templated
-// types:
-//
-// * vertex needs to know the type of the edges to store,
-//
-// * edge needs to know the type of the vertex is has a reference to.
-
-template <typename Edge>
-struct vertex
-{
-  std::vector<Edge> m_t;
-};
-
-template <typename Vertex, typename T>
-struct edge
-{
-  Vertex &m_a;
-  T m_t;
-};
-
-// I can resolve the conflict by specifically using the vertex<edge>
-// type, but this way I cannot use a different vertex type, it has to
-// be "vertex".
-
+// Here we have a structure that has a vector of elements of type T.
+// No biggie.
 template <typename T>
-struct edge
+struct A
 {
-  vertex<edge> &m_a;
-  T m_t;
+  std::vector<T> m_t;
+};
+
+// But those elemenets want to have a reference to the object that
+// owns them.  And that's a problem.
+template <typename T>
+struct B
+{
+  T &m_t;
+
+  B(T &t): m_t(t)
+  {
+  }
 };
 
 int
 main()
 {
-  // Cannot create the type of the edge, because I need the type of
-  // the vertex:
-  //
-  // edge<vertex<edge<vertex<edge<....
 
-  // Neither can I create the type of the vertex:
-  //
-  // vertex<edge<vertex<edge<vertex<....
 }
