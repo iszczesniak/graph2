@@ -15,7 +15,7 @@ main()
   //   \---[2, (1, 5)]---(1)---[2, (1, 5)]---/
 
   using edge_type = edge<vertex, weight<int>, resources<SU>>;
-  using vertex_type = vertex<edge_type, index<unsigned>, name<string>>;
+  using vertex_type = vertex<edge_type>;
   using graph_type = graph<vertex_type>;
   graph_type g(4);
 

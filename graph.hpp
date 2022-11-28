@@ -46,14 +46,14 @@ struct graph
   graph(graph &&) = default;
 };
 
-template <typename Edge, typename... Props>
-struct vertex: Props...
+template <typename Edge>
+struct vertex: index<unsigned>, name<std::string>
 {
   using edge_type = Edge;
   // The data structure for storing edges.
   using edges_type = std::vector<edge_type>;
 
-  vertex(Props &&... props): Props(props)...
+  vertex(unsigned i, std::string n): index(i), name(n)
   {
   }
 
@@ -76,7 +76,7 @@ template <template<typename, typename...> typename Vertex,
           typename... Props>
 struct edge: Props...
 {
-  using vertex_type = Vertex;
+  using vertex_type = Vertex<edge>;
 
   // The source node of the edge.
   const vertex_type &m_source;
@@ -90,9 +90,10 @@ struct edge: Props...
   }
 };
 
-template <typename... Props>
+template <template<typename, typename...> typename Vertex,
+          typename... Props>
 std::ostream &
-operator << (std::ostream &os, const edge<Props...> &e)
+operator << (std::ostream &os, const edge<Vertex, Props...> &e)
 {
   os << "edge(";
   (os << ... << static_cast<Props>(e));
