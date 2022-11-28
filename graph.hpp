@@ -72,10 +72,11 @@ struct vertex: Props...
   }
 };
 
-template <typename... Props>
+template <template<typename, typename...> typename Vertex,
+          typename... Props>
 struct edge: Props...
 {
-  using vertex_type = vertex<edge>;
+  using vertex_type = Vertex;
 
   // The source node of the edge.
   const vertex_type &m_source;
