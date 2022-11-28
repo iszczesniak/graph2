@@ -14,8 +14,10 @@ main()
   //  \                                       /
   //   \---[2, (1, 5)]---(1)---[2, (1, 5)]---/
 
-  graph<vertex<edge<weight<int>, resources<SU>>,
-               index<unsigned>, name<std::string>>> g(4);
+  using edge_type = edge<vertex, weight<int>, resources<SU>>;
+  using vertex_type = vertex<edge_type, index<unsigned>, name<string>>;
+  using graph_type = graph<vertex_type>;
+  graph_type g(4);
 
   auto &v0 = add_vertex(g, "v0");
   auto &v1 = add_vertex(g, "v1");

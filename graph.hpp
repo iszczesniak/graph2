@@ -154,30 +154,34 @@ operator << (std::ostream &os, const vertex<Edge, Props...> &v)
 // *******************************************************************
 // The edge functions.
 
-template <typename... Props>
+template <template<typename, typename...> typename Vertex,
+          typename... Props>
 auto &
-get_source(edge<Props...> &e)
+get_source(edge<Vertex, Props...> &e)
 {
   return e.m_source;
 }
 
-template <typename... Props>
+template <template<typename, typename...> typename Vertex,
+          typename... Props>
 const auto &
-get_source(const edge<Props...> &e)
+get_source(const edge<Vertex, Props...> &e)
 {
   return e.m_source;
 }
 
-template <typename... Props>
+template <template<typename, typename...> typename Vertex,
+          typename... Props>
 auto &
-get_target(edge<Props...> &e)
+get_target(edge<Vertex, Props...> &e)
 {
   return e.m_target;
 }
 
-template <typename... Props>
+template <template<typename, typename...> typename Vertex,
+          typename... Props>
 const auto &
-get_target(const edge<Props...> &e)
+get_target(const edge<Vertex, Props...> &e)
 {
   return e.m_target;
 }
