@@ -14,7 +14,7 @@ using vertex_type_tmp = vertex<Edge, index<unsigned>, name<string>>;
 
 // The edge type with the weight and the resources properties.  We
 // break the dependency between the vertex and the edge type by
-// passing to to the edge type the vertex_type_tmp template.
+// passing to the edge type the vertex_type_tmp template.
 using edge_type = edge<vertex_type_tmp, weight<unsigned>, resources<SU>>;
 
 // Now we know the edge type, so we can instantiate the vertex type.
