@@ -7,6 +7,22 @@
 
 using namespace std;
 
+// The vertex type with the index and the name properties.  It's a
+// temporary vertex type, because it still need the edge type.
+template <typename Edge>
+using vertex_type_tmp = vertex<Edge, index<unsigned>, name<string>>;
+
+// The edge type with the weight and the resources properties.  We
+// break the dependency between the vertex and the edge type by
+// passing to to the edge type the vertex_type_tmp template.
+using edge_type = edge<vertex_type_tmp, weight<unsigned>, resources<SU>>;
+
+// Now we know the edge type, so we can instantiate the vertex type.
+using vertex_type = vertex_type_tmp<edge_type>;
+
+// Here's the graph type.
+using graph_type = graph<vertex_type>;
+
 int
 main()
 {
@@ -14,9 +30,6 @@ main()
   //  \                                       /
   //   \---[2, (1, 5)]---(1)---[2, (1, 5)]---/
 
-  using edge_type = edge<vertex, weight<int>, resources<SU>>;
-  using vertex_type = vertex<edge_type>;
-  using graph_type = graph<vertex_type>;
   graph_type g(4);
 
   auto &v0 = add_vertex(g, "v0");
