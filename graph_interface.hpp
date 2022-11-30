@@ -40,6 +40,15 @@ template <typename T>
 using Vertex = typename vertex_traits<T>::type;
 
 // *******************************************************************
+// The index traits
+
+template<typename>
+struct index_traits;
+
+template <typename T>
+using Index = typename index_traits<T>::type;
+
+// *******************************************************************
 // The edge traits
 
 template<typename>
