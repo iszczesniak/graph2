@@ -216,4 +216,20 @@ add_edge_pair(Vertex &v1, const Vertex &v2, Props &&... props)
   add_edge(v2, v1, std::forward<Props>(props)...);
 }
 
+// *******************************************************************
+// Traits.
+
+template <typename Edge, typename... Props>
+struct index_traits<vertex<Edge, Props...>>
+{
+  using type = vertex<Edge, Props...>::index_type;
+};
+
+template <template<typename, typename...> typename Vertex,
+          typename... Props>
+struct vertex_traits<edge<Vertex, Props...>>
+{
+  using type = typename edge<Vertex, Props...>::vertex_type;
+};
+
 #endif // GRAPH_HPP

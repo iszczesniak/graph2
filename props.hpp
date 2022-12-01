@@ -88,9 +88,10 @@ operator << (std::ostream &os, const resources<Resources> &w)
 template <typename Index>
 struct index
 {
-  Index m_index;
+  using index_type = Index;
+  index_type m_index;
 
-  index(const Index &index): m_index(index)
+  index(const index_type &index): m_index(index)
   {
   }
 };
