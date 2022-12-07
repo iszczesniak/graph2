@@ -15,11 +15,13 @@ struct weight
   weight(const Weight &weight): m_weight(weight)
   {
   }
+
+  constexpr auto operator <=> (const weight &) const = default;
 };
 
 // The non-const getter.
 template <typename Weight>
-auto &
+constexpr auto &
 get_weight(weight<Weight> &a)
 {
   return a.m_weight;
@@ -27,7 +29,7 @@ get_weight(weight<Weight> &a)
 
 // The const getter.
 template <typename Weight>
-const auto &
+constexpr const auto &
 get_weight(const weight<Weight> &a)
 {
   return a.m_weight;
@@ -54,6 +56,8 @@ struct resources
   resources(const Resources &resources): m_resources(resources)
   {
   }
+
+  constexpr auto operator <=> (const resources &) const = default;
 };
 
 // The non-const getter.
@@ -94,6 +98,8 @@ struct index
   index(const index_type &index): m_index(index)
   {
   }
+
+  constexpr auto operator <=> (const index &) const = default;
 };
 
 // The non-const getter.
