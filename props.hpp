@@ -10,9 +10,10 @@
 template <typename Weight>
 struct weight
 {
-  Weight m_weight;
+  using weight_type = Weight;
+  weight_type m_weight;
 
-  weight(const Weight &weight): m_weight(weight)
+  weight(const weight_type &weight): m_weight(weight)
   {
   }
 
