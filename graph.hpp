@@ -88,6 +88,12 @@ struct edge: Props...
     Props(std::forward<Props>(props))...
     {
     }
+
+  // Edge objects are the same only when it's the same object.
+  bool operator == (const edge &e)
+  {
+    return this == &e;
+  }
 };
 
 template <template<typename, typename...> typename Vertex,
