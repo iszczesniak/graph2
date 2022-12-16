@@ -1,3 +1,6 @@
 [submodule "test/units"]
 	path = test/units
 	url = git@github.com:iszczesniak/units
+[submodule "test/props"]
+	path = test/props
+	url = https://github.com/iszczesniak/props

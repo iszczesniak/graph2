@@ -1,4 +1,5 @@
 #include "graph.hpp"
+#include "props.hpp"
 #include "units.hpp"
 
 #include <cassert>

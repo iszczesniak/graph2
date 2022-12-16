@@ -2,7 +2,6 @@
 #define GRAPH_HPP
 
 #include "graph_interface.hpp"
-#include "props.hpp"
 
 #include <cassert>
 #include <iostream>

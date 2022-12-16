@@ -5,6 +5,7 @@ CXXFLAGS = -O3 -Wno-deprecated
 
 CXXFLAGS := -std=c++20
 CXXFLAGS := $(CXXFLAGS) -I ../
+CXXFLAGS := $(CXXFLAGS) -I props
 CXXFLAGS := $(CXXFLAGS) -I units
 
 # Use the C++ linker
