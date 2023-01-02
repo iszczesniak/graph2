@@ -27,8 +27,8 @@
 // The above specialization is explicit, because A is not templated.
 // However, if A was templated, we would have to partially specialize
 // the getter, and the function partial specialization is not allowed
-// in C++.  My types are templated, so it makes no sense to provide
-// the declations of the getters.
+// in C++.  My types are templated, so I wouldn't be able to
+// specialize partially the declations of the getters.
 
 // *******************************************************************
 // The vertex traits
