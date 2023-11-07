@@ -63,6 +63,13 @@ struct vertex: Props...
   // references to edges anywhere.
   edges_type m_edges;
 
+  template <typename... EdgeProps>
+  void
+  add_edge(const vertex &t, EdgeProps &&... ep)
+  {
+    m_edges.emplace_back(*this, t, std::forward<EdgeProps>(ep)...);
+  }
+
   // Vertex objects are the same only when it's the same object.
   bool
   operator == (const vertex &a) const
@@ -208,9 +215,12 @@ add_vertex(graph<Vertex> &g, const std::string name)
 
 template <typename Vertex, typename... Props>
 void
-add_edge(Vertex &s, const Vertex &t, Props &&... props)
+add_edge(Vertex &s, const Vertex &t, Props &&... props) requires requires
 {
-  s.m_edges.emplace_back(s, t, std::forward<Props>(props)...);
+  s.add_edge(t, std::forward<Props>(props)...);
+}
+{
+  s.add_edge(t, std::forward<Props>(props)...);
 }
 
 template <typename Vertex, typename... Props>
