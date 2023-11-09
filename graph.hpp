@@ -29,7 +29,7 @@ struct graph
   vertexes_type m_vertexes;
 
   // The size type.
-  using size_type = vertexes_type::size_type;
+  using size_type = typename vertexes_type::size_type;
 
   // You have to give the number of vertexs to create the graph.
   graph(size_type n)
@@ -237,7 +237,7 @@ add_edge_pair(Vertex &v1, const Vertex &v2, Props &&... props)
 template <typename Edge, typename... Props>
 struct index_traits<vertex<Edge, Props...>>
 {
-  using type = vertex<Edge, Props...>::index_type;
+  using type = typename vertex<Edge, Props...>::index_type;
 };
 
 template <template<typename, typename...> typename Vertex,
