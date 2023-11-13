@@ -237,7 +237,13 @@ add_edge_pair(Vertex &v1, const Vertex &v2, Props &&... props)
 template <typename Edge, typename... Props>
 struct index_traits<vertex<Edge, Props...>>
 {
-  using type = typename vertex<Edge, Props...>::index_type;
+  using type = vertex<Edge, Props...>::index_type;
+};
+
+template <typename Vertex>
+struct vertex_traits<graph<Vertex>>
+{
+  using type = Vertex;
 };
 
 template <template<typename, typename...> typename Vertex,
