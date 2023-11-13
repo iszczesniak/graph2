@@ -253,4 +253,17 @@ struct vertex_traits<edge<Vertex, Props...>>
   using type = typename edge<Vertex, Props...>::vertex_type;
 };
 
+template <typename Vertex>
+struct edge_traits<graph<Vertex>>
+{
+  using type = Vertex::edge_type;
+};
+
+template <template<typename, typename...> typename Vertex,
+          typename... Props>
+struct weight_traits<edge<Vertex, Props...>>
+{
+  using type = edge<Vertex, Props...>::weight_type;
+};
+
 #endif // GRAPH_HPP
