@@ -243,7 +243,7 @@ add_edge_pair(Vertex &v1, const Vertex &v2, Props &&... props)
 template <typename Edge, typename... Props>
 struct index_traits<vertex<Edge, Props...>>
 {
-  using type = vertex<Edge, Props...>::index_type;
+  using type = typename vertex<Edge, Props...>::index_type;
 };
 
 template <typename Vertex>
@@ -262,14 +262,14 @@ struct vertex_traits<edge<Vertex, Props...>>
 template <typename Vertex>
 struct edge_traits<graph<Vertex>>
 {
-  using type = Vertex::edge_type;
+  using type = typename Vertex::edge_type;
 };
 
 template <template<typename, typename...> typename Vertex,
           typename... Props>
 struct weight_traits<edge<Vertex, Props...>>
 {
-  using type = edge<Vertex, Props...>::weight_type;
+  using type = typename edge<Vertex, Props...>::weight_type;
 };
 
 #endif // GRAPH_HPP
