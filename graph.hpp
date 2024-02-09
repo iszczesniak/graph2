@@ -5,6 +5,7 @@
 
 #include <cassert>
 #include <iostream>
+#include <numeric>
 #include <set>
 #include <string>
 #include <utility>
@@ -129,6 +130,15 @@ auto
 num_vertexes(const graph<Vertex> &g)
 {
   return g.m_vertexes.size();
+}
+
+template <typename Vertex>
+auto
+num_edges(const graph<Vertex> &g)
+{
+  return std::accumulate(g.m_vertexes.begin(), g.m_vertexes.end(), 0,
+                         [](auto c, const auto &v)
+                         {return c + get_edges(v).size();});
 }
 
 template <typename Vertex>
