@@ -8,10 +8,10 @@
 
 using namespace std;
 
-// The vertex type with the index and the name properties.  It's a
+// The vertex type with the key and the name properties.  It's a
 // temporary vertex type, because it still need the edge type.
 template <typename Edge>
-using vertex_type_tmp = vertex<Edge, index<unsigned>, name<string>>;
+using vertex_type_tmp = vertex<Edge, key<unsigned>, name<string>>;
 
 // The edge type with the weight and the resources properties.  We
 // break the dependency between the vertex and the edge type by
@@ -38,13 +38,13 @@ main()
   auto &v2 = add_vertex(g, "v2");
   auto &v3 = add_vertex(g, "v3");
 
-  assert(get_index(v0) == 0);
-  assert(get_index(v1) == 1);
-  assert(get_index(v2) == 2);
-  assert(get_index(v3) == 3);
+  assert(get_key(v0) == 0);
+  assert(get_key(v1) == 1);
+  assert(get_key(v2) == 2);
+  assert(get_key(v3) == 3);
 
-  // Test the index traits.
-  auto i0 = get_index(v0);
+  // Test the key traits.
+  auto i0 = get_key(v0);
 
   add_edge(v0, v1, 1, SU{CU(1, 5)}); // e0
   add_edge(v0, v2, 2, SU{CU(0, 3)}); // e1
