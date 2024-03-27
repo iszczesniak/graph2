@@ -116,7 +116,7 @@ std::ostream &
 operator << (std::ostream &os, const edge<Vertex, Props...> &e)
 {
   os << "edge(";
-  (os << ... << static_cast<Props>(e));
+  (os << ... << static_cast<const Props &>(e));
   os << ")";
 
   return os;
