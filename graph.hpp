@@ -111,12 +111,13 @@ struct edge: Props...
 };
 
 template <template<typename, typename...> typename Vertex,
-          typename... Props>
+          typename Prop, typename... Props>
 std::ostream &
-operator << (std::ostream &os, const edge<Vertex, Props...> &e)
+operator << (std::ostream &os, const edge<Vertex, Prop, Props...> &e)
 {
   os << "edge(";
-  (os << ... << static_cast<const Props &>(e));
+  os << static_cast<const Prop &>(e);
+  ((os << ", " << static_cast<const Props &>(e)), ...);
   os << ")";
 
   return os;
@@ -172,11 +173,14 @@ get_edges(const vertex<Edge, Props...> &v)
   return v.m_edges;
 }
 
-template <typename Edge, typename... Props>
+template <typename Edge, typename Prop, typename... Props>
 std::ostream &
-operator << (std::ostream &os, const vertex<Edge, Props...> &v)
+operator << (std::ostream &os, const vertex<Edge, Prop, Props...> &v)
 {
-  os << "vertex(" << "name = " << get_name(v) << ")";
+  os << "vertex(";
+  os << static_cast<const Prop &>(v);
+  ((os << ", " << static_cast<const Props &>(v)), ...);
+  os << ")";
 
   return os;
 }
