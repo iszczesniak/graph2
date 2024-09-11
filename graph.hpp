@@ -85,9 +85,9 @@ struct edge: Props...
 {
   using vertex_type = Vertex<edge>;
 
-  // The source node of the edge.
+  // The source vertex of the edge.
   const vertex_type &m_source;
-  // The target node of the edge.
+  // The target vertex of the edge.
   const vertex_type &m_target;
 
   // Creates an edge with the properties defaulted.
