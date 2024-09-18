@@ -2,6 +2,7 @@
 #define GRAPH_HPP
 
 #include "graph_interface.hpp"
+#include "props_interface.hpp"
 
 #include <cassert>
 #include <iostream>
@@ -228,8 +229,8 @@ auto &
 add_vertex(graph<Vertex> &g, const std::string name)
 {
   assert(g.m_vertexes.size() < g.m_vertexes.capacity());
-  auto index = g.m_vertexes.size();
-  g.m_vertexes.emplace_back(index, name);
+  auto key = g.m_vertexes.size();
+  g.m_vertexes.emplace_back(key, name);
   return g.m_vertexes.back();
 }
 
@@ -255,9 +256,9 @@ add_edge_pair(Vertex &v1, const Vertex &v2, Props &&... props)
 // Traits.
 
 template <typename Edge, typename... Props>
-struct index_traits<vertex<Edge, Props...>>
+struct key_traits<vertex<Edge, Props...>>
 {
-  using type = typename vertex<Edge, Props...>::index_type;
+  using type = typename vertex<Edge, Props...>::key_type;
 };
 
 template <typename Vertex>
