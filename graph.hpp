@@ -164,10 +164,10 @@ get_edges(const vertex<Edge, Props...> &v)
 // We consider vertex objects equal when they are the same object.
 template <typename Edge, typename... Props>
 bool
-operator == (const vertex<Edge, Props...> &a,
-             const vertex<Edge, Props...> &b)
+operator == (const vertex<Edge, Props...> &v1,
+             const vertex<Edge, Props...> &v2)
 {
-  return &a == &b;
+  return &v1 == &v2;
 }
 
 template <typename Edge, typename Prop, typename... Props>
@@ -220,10 +220,10 @@ get_target(const edge<Vertex, Props...> &e)
 // We consider edge objects equal when they are the same object.
 template <template<typename, typename...> typename Vertex,
           typename... Props>
-bool operator == (const edge<Vertex, Props...> &a,
-                  const edge<Vertex, Props...> &b)
+bool operator == (const edge<Vertex, Props...> &e1,
+                  const edge<Vertex, Props...> &e2)
 {
-  return &a == &b;
+  return &e1 == &e2;
 }
 
 // *******************************************************************
