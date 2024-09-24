@@ -71,13 +71,6 @@ struct vertex: Props...
   {
     m_edges.emplace_back(*this, t, std::forward<EdgeProps>(ep)...);
   }
-
-  // Vertex objects are the same only when it's the same object.
-  bool
-  operator == (const vertex &a) const
-  {
-    return this == &a;
-  }
 };
 
 template <template<typename, typename...> typename Vertex,
@@ -103,12 +96,6 @@ struct edge: Props...
     Props(std::forward<Props>(props))...
     {
     }
-
-  // Edge objects are the same only when it's the same object.
-  bool operator == (const edge &e)
-  {
-    return this == &e;
-  }
 };
 
 template <template<typename, typename...> typename Vertex,
@@ -174,6 +161,15 @@ get_edges(const vertex<Edge, Props...> &v)
   return v.m_edges;
 }
 
+// We consider vertex objects equal when they are the same object.
+template <typename Edge, typename... Props>
+bool
+operator == (const vertex<Edge, Props...> &a,
+             const vertex<Edge, Props...> &b)
+{
+  return &a == &b;
+}
+
 template <typename Edge, typename Prop, typename... Props>
 std::ostream &
 operator << (std::ostream &os, const vertex<Edge, Prop, Props...> &v)
@@ -219,6 +215,15 @@ const auto &
 get_target(const edge<Vertex, Props...> &e)
 {
   return e.m_target;
+}
+
+// We consider edge objects equal when they are the same object.
+template <template<typename, typename...> typename Vertex,
+          typename... Props>
+bool operator == (const edge<Vertex, Props...> &a,
+                  const edge<Vertex, Props...> &b)
+{
+  return &a == &b;
 }
 
 // *******************************************************************
